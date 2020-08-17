@@ -19,5 +19,8 @@ class AllBrandsView(generic.ListView):
     model = Brand
     template_name = 'wardrobe_manager/brands_list.html'
 
+    def get_queryset(self):
+        return Brand.objects.order_by('name')
+
 def brand_rate(request, brand_id):
     return HttpResponseRedirect(reverse('wardrobe_manager:all_brands'))
