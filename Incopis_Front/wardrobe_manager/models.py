@@ -11,3 +11,8 @@ class Item(models.Model):
     description = models.TextField()
     serial_number = models.BigIntegerField()
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    price = models.FloatField()
+
+    def is_cheaper(self, other_item):
+        """ Check which item is cheaper"""
+        return self.price < other_item.price
