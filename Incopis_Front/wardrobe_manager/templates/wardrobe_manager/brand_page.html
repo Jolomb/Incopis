@@ -1,0 +1,9 @@
+<h1>{{ brand.name }}</h1>
+
+<p>Rate this brand!</p>
+<form action="{% url 'wardrobe_manager:brand_rate' brand.id %}" method="post">
+{% csrf_token %}
+
+<input type="range" name="rating" id="rating" min="0" max="5">
+<input type="submit" value="Rate!">
+</form>

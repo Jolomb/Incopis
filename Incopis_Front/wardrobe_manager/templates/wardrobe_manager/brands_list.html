@@ -1,0 +1,8 @@
+<h1>Brands list</h1>
+<ul>
+{% for brand in brand_list %}
+    <li><a href="{% url 'wardrobe_manager:brand_details' brand.id %}"> {{ brand.name }} </a></li>
+{% empty %}
+    <p> Brand list is empty?!</p>
+{% endfor %}
+</ul>
