@@ -5,9 +5,10 @@ from django.views import generic
 
 from .models import Brand
 
-
-# Create your views here.
 def index(request):
+    """
+    This is the main page served in this app
+    """
     return HttpResponse("HI!")
 
 class BrandDetail(generic.DetailView):
