@@ -38,8 +38,10 @@ class AllBrandsLiveViewTest(LiveServerTestCase):
         super().tearDownClass()
 
     def test_list(self):
+        Brand.objects.create(name="MyBrand")
         self.selenium.get('%s%s' % (self.live_server_url, '/wardrobe_manager/brand/'))
-        #self.selenium.find_element_by_name("H&M")
+        element = self.selenium.find_element_by_link_text("MyBrand")
+        self.assertTrue(element.is_displayed())
 
 class AllBrandsViewTest(TestCase):
     """
