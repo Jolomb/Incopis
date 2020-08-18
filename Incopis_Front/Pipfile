@@ -10,6 +10,7 @@ django = "*"
 selenium = "*"
 psycopg2 = "*"
 ipython = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
