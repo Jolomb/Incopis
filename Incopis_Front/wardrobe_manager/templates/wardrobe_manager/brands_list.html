@@ -1,7 +1,11 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'wardrobe_manager/style.css' %}">
+
 <h1>Brands list</h1>
 <ul>
 {% for brand in brand_list %}
-    <li><a href="{% url 'wardrobe_manager:brand_details' brand.id %}"> {{ brand.name }} </a></li>
+    <li>Brand: <a href="{% url 'wardrobe_manager:brand_details' brand.id %}"> {{ brand.name }} </a></li>
 {% empty %}
     <p> Brand list is empty?!</p>
 {% endfor %}
