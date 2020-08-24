@@ -12,6 +12,8 @@ psycopg2 = "*"
 ipython = "*"
 coverage = "*"
 uwsgi = "*"
+graphene-django = "*"
+graphene = "*"
 
 [requires]
 python_version = "3.6"
