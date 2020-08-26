@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# During debug, we will have a server for front-end and server for backend.
+if DEBUG:
+    INSTALLED_APPS += [
+        'corsheaders'
+    ]
+    CORS_ORIGIN_WHITELIST = (
+        'http://localhost:8080',
+    )
+    MIDDLEWARE += [
+        'corsheaders.middleware.CorsMiddleware',
+    ]
 
 ROOT_URLCONF = 'Incopis_Front.urls'
 
@@ -125,3 +138,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = "/mnt/g/EyalBackup/Projects/Incubas/WebFrameWork/Incopis_Front/static_root/"
+
+SHELL_PLUS = 'ipython'
