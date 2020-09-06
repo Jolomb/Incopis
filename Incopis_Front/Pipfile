@@ -16,6 +16,7 @@ graphene-django = "*"
 graphene = "*"
 django-cors-headers = "*"
 django-extensions = "*"
+django-redis = "*"
 
 [requires]
 python_version = "3.6"

@@ -54,12 +54,11 @@ MIDDLEWARE = [
 
 # During debug, we will have a server for front-end and server for backend.
 if DEBUG:
+    print("Running in debug!")
     INSTALLED_APPS += [
         'corsheaders'
     ]
-    CORS_ORIGIN_WHITELIST = (
-        'http://localhost:8080',
-    )
+    CORS_ORIGIN_ALLOW_ALL = True
     MIDDLEWARE += [
         'corsheaders.middleware.CorsMiddleware',
     ]
@@ -132,6 +131,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "incopis"
+    }
+}
+CACHE_TTL = 60 * 15
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
