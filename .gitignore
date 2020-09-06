@@ -5,3 +5,4 @@ Incopis_Front/geckodriver.log
 *.coverage
 Incopis_Front/wardrobe_manager/geckodriver.log
 Incopis_Front/static_root/*
+Incopis_Front/personal_wardrobe_frontend/node_modules/*
