@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { BRAND_LIST_QUERY } from "./query";
 
+
 import "./App.css";
 
 const App = () => {
@@ -18,36 +19,36 @@ const App = () => {
 }
 export default App
 
-class BrandsList extends Component {
-
+class BrandsListPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            brands: props.data
+        };
+    }
     render() {
+        const brands_list = this.state.brands;
         return (
-         <Query query={BRAND_LIST_QUERY}>
-             {({ loading, error, data }) => {
-                if (!loading) return <div>Loading!</div>
-                if (error) return <div>Error!</div>
-
-                const brands = data.brands_list;
-                return (
-                    <div className="brands-list">
-                        {brands.map( brand => {
-                            <li>Barnd: {brand.name}</li>
-                        }
-                        )}
-                    </div>
-                )
-             }
-             }
-         </Query>  
-        )
+            <div className="brand-list">
+                {brands_list.map( brand => {
+                    return (
+                        <li>A Brand by the name: {brand.name}</li>
+                    );
+                })}
+            </div>
+        );
     }
 }
 
 const MainPage = (props) => {
+    const { loading, data, error } = useQuery(BRAND_LIST_QUERY);
+    if (loading) return <div>Loading!</div>;
+    if (error) return <div>Error!</div>;
+    if (!data) return <div>Not Found!</div>;
 
     return (
         <div className="main-page">
-            <BrandsList></BrandsList>
+            <BrandsListPage data={data.brands}></BrandsListPage>
         </div>
     )
 }
