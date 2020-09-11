@@ -21,38 +21,63 @@ export default App
 
 function BrandButton(props) {
     return (
-        <div className="brand-button" onClick={props.onClick}>
+        <div className="brand-button" onClick={props.onClick} title={props.brand_name}>
             {props.brand_name}
         </div>
     )
+}
+
+function BrandDetail(props) {
+    if (props.current_brand === undefined) {
+        return (
+            <div>
+                No brand selected!
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                {props.current_brand.name}
+            </div>
+        );
+    }
 }
 
 class BrandsListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            brands: props.data
+            brands: props.data,
+            current_brand: undefined
         };
     }
     render() {
         const brands_list = this.state.brands;
         return (
-            <div className="brand-list">
-                {brands_list.map( brand => {
-                    return (
-                        <BrandButton 
-                            brand_name={brand.name} 
-                            key={brand.id}
-                            onClick={() => this.handleBrandClick(brand.id)}
-                        />
-                    );
-                })}
+            <div>
+                <h1>My Brand list page!</h1>
+                <div className="brand-list">
+                    {brands_list.map( (brand, index) => {
+                        return (
+                            <BrandButton 
+                                brand_name={brand.name} 
+                                key={brand.id}
+                                onClick={() => this.handleBrandClick(index)}
+                            />
+                        );
+                    })}
+                </div>
+                <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
             </div>
         );
     }
 
-    handleBrandClick(id) {
-        alert(id);
+    handleBrandClick(index) {
+        const new_current_brand = index;
+        this.setState({
+            brands: this.state.brands,
+            current_brand: new_current_brand
+        })
     }
 }
 
