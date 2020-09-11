@@ -1,0 +1,22 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+  }
+
+  .brand-button {
+    clear: both;
+    content: "";
+    display: table;
+    background: #ada;
+    border: 3px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: 5px;
+    padding: 0;
+    text-align: center;
+    width: 200px;
+  }

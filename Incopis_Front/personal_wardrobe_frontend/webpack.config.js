@@ -38,7 +38,7 @@ const productionSettings = {
                     }
                 },
                 {
-                    test: /\\.css$/i,
+                    test: /\\.css$/,
                     use: [
                       // IMPORTANT => don't forget `injectType`  option  
                       // in some cases some styles can be missing due to 
@@ -101,7 +101,9 @@ const devSettings = {
                     }
                 },
                 {
-                    test: /\\.css$/i,
+                    test: /\.css$/,
+                    exclude: /node_modules/,
+                    include: path.resolve(__dirname, 'src'),
                     use: [
                       // IMPORTANT => don't forget `injectType`  option  
                       // in some cases some styles can be missing due to 
