@@ -19,6 +19,14 @@ const App = () => {
 }
 export default App
 
+function BrandButton(props) {
+    return (
+        <div className="brand-button" onClick={props.onClick}>
+            {props.brand_name}
+        </div>
+    )
+}
+
 class BrandsListPage extends Component {
     constructor(props) {
         super(props);
@@ -32,11 +40,19 @@ class BrandsListPage extends Component {
             <div className="brand-list">
                 {brands_list.map( brand => {
                     return (
-                        <li>A Brand by the name: {brand.name}</li>
+                        <BrandButton 
+                            brand_name={brand.name} 
+                            key={brand.id}
+                            onClick={() => this.handleBrandClick(brand.id)}
+                        />
                     );
                 })}
             </div>
         );
+    }
+
+    handleBrandClick(id) {
+        alert(id);
     }
 }
 
