@@ -13,7 +13,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Grid from '@material-ui/core/Grid';
 
-import { BRAND_LIST_QUERY } from "./query";
+import { BRAND_LIST_QUERY, ITEMS_BY_BRAND_QUERY } from "./query";
 
 import "./App.css";
 import { Drawer, Divider, Container, CssBaseline, Typography } from '@material-ui/core';
@@ -81,36 +81,48 @@ function BrandButton(props) {
 
 function BrandDetail(props) {
     const classes = useStyles();
+    const { loading, data, error } = useQuery(ITEMS_BY_BRAND_QUERY, {variables: {'brandId': 
+    props.current_brand.id}});
 
-    if (props.current_brand === undefined) {
-        return (
-            <div>
-            </div>
-        );
-    } else {
-        return (
-            <div className={classes.content}>
-                <Container
-                    maxWidth='lg'
-                    className={classes.container}
-                >
-                    <Grid container spacing={3}>
-                        <Grid item xs={6} md={8} lg={9}>
-                            <Paper className={clsx(classes.fixedHeight, classes.paper)}>
-                                {props.current_brand.name}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={6} md={8} lg={9}>
-                            <Paper className={clsx(classes.fixedHeight, classes.paper)}>
-                                Another grid item
-                            </Paper>
-                        </Grid>
-                        
+    if (loading) return <div>Loading!</div>;
+    if (error) return <div>Error!</div>
+
+    return (
+        <div className={classes.content}>
+            <Container
+                maxWidth='lg'
+                className={classes.container}
+            >
+                <Grid container spacing={3}>
+                    <Grid item xs={6} md={8} lg={9}>
+                        <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                            {props.current_brand.name}
+                        </Paper>
                     </Grid>
-                </Container>
-            </div>
-        );
-    }
+                    <Grid item xs={6} md={8} lg={9}>
+                        <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                        <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
+                            List of famous items:
+                        </Typography>
+                        <Divider/>
+                        <List>
+                            {
+                                data.itemsByBrand.map( item => {
+                                    return (
+                                        <ListItem>
+                                        <ListItemText primary={item.description} />
+                                        </ListItem>
+                                    );
+                                })
+                            }
+                        </List>    
+                        </Paper>
+                    </Grid>
+                    
+                </Grid>
+            </Container>
+        </div>
+    );
 }
 
 function BrandList(props) {
@@ -159,13 +171,23 @@ class BrandsListPage extends Component {
     }
     render() {
         const brands_list = this.state.brands;
-        return (
-            <div className="root">
-                <Header></Header>
-                <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
-                <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
-            </div>
-        );
+        if (this.state.current_brand === undefined){
+            return (
+                <div className="root">
+                    <Header></Header>
+                    <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
+                </div>
+            );
+        } else {
+            return (
+                <div className="root">
+                    <Header></Header>
+                    <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
+                    <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
+                </div>
+            );
+        }
+        
     }
 
     handleBrandClick(index) {

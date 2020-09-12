@@ -16,12 +16,24 @@ class ItemType(DjangoObjectType):
 class Query(graphene.ObjectType):
     all_brands = graphene.List(BrandType)
     all_items = graphene.List(ItemType)
+    brand_by_name = graphene.Field(BrandType, name=graphene.String(required=True))
+    items_by_brand = graphene.List(ItemType, brand_id=graphene.ID(required=True))
 
     def resolve_all_brands(self, info):
         return Brand.objects.all()
 
     def resolve_all_items(self, info):
         return Item.objects.all()
+
+    def resolve_brand_by_name(self, info, name):
+        try:
+            return Brand.objects.get(name=name)
+        except Brand.DoesNotExist:
+            return None
+
+    def resolve_items_by_brand(self, info, brand_id):
+        return Item.objects.filter(brand=brand_id)
+        
 
 class CreateBrand(graphene.Mutation):
     id = graphene.Int()

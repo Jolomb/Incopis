@@ -8,4 +8,12 @@ export const BRAND_LIST_QUERY = gql`
         }
     }
 `;
+
+export const ITEMS_BY_BRAND_QUERY = gql`
+    query items($brandId: ID!){
+        itemsByBrand(brandId: $brandId) {
+            description
+        }
+    }
+`;
     
