@@ -110,8 +110,7 @@ const devSettings = {
                       // inline styling. 
                       { loader: 'style-loader', options: { injectType: 'styleTag' } },
                       "css-loader",
-                      'postcss-loader'
-                      //{ loader: 'sass-loader' },
+                      'postcss-loader',
                     ],
                 },
             ]

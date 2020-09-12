@@ -15,7 +15,6 @@ import Grid from '@material-ui/core/Grid';
 
 import { BRAND_LIST_QUERY } from "./query";
 
-
 import "./App.css";
 import { Drawer, Divider, Container, CssBaseline, Typography } from '@material-ui/core';
 
@@ -143,8 +142,8 @@ function Header(props){
     const classes = useStyles();
     return (
         <div>
-        <Typography component="h1" variant="h6" color="inherit" noWrap className="header" gutterBottom>
-            My Brand list page!
+        <Typography component="h1" variant="h3" color="inherit" noWrap className="header" gutterBottom>
+            My Brand list page
         </Typography>
         </div>
     );
@@ -188,7 +187,7 @@ const MainPage = (props) => {
     return (
         <div>
             <CssBaseline/>
-            <BrandsListPage data={data.brands}></BrandsListPage>
+            <BrandsListPage data={data.allBrands}></BrandsListPage>
         </div>
     )
 }

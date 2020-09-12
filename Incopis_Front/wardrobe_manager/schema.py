@@ -1,17 +1,27 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from .models import Brand
+from .models import Brand, Item
 
 class BrandType(DjangoObjectType):
     class Meta:
         model = Brand
+        fields = ("id", "name")
+
+class ItemType(DjangoObjectType):
+    class Meta:
+        model = Item
+        fields = ("id", "description", "serial_number", "brand", "price")
 
 class Query(graphene.ObjectType):
-    brands = graphene.List(BrandType)
+    all_brands = graphene.List(BrandType)
+    all_items = graphene.List(ItemType)
 
-    def resolve_brands(self, info):
+    def resolve_all_brands(self, info):
         return Brand.objects.all()
+
+    def resolve_all_items(self, info):
+        return Item.objects.all()
 
 class CreateBrand(graphene.Mutation):
     id = graphene.Int()
