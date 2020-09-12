@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import clsx from 'clsx';
 import { Route, Switch, Line} from "react-router-dom";
 import { Query } from 'react-apollo';
 import { useQuery } from '@apollo/react-hooks';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Grid from '@material-ui/core/Grid';
 
 import { BRAND_LIST_QUERY } from "./query";
 
 
 import "./App.css";
+import { Drawer, Divider, Container, CssBaseline, Typography } from '@material-ui/core';
 
 const App = () => {
     return (
@@ -19,28 +30,124 @@ const App = () => {
 }
 export default App
 
+const useStyles = makeStyles((theme) => ({
+      root: {
+    display: 'flex',
+  },
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+        marginLeft: 240,
+        width: `calc(100% - 240px)`,
+      },
+      container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+      },
+      fixedHeight: {
+          height: 240,
+      },
+      paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+      },
+      drawerPaper: {
+        position: 'relative',
+        whiteSpace: 'nowrap',
+        width: 240,
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
+      title: {
+        flexGrow: 1,
+      },
+}));
+
 function BrandButton(props) {
+    const classes = useStyles();
     return (
-        <div className="brand-button" onClick={props.onClick} title={props.brand_name}>
-            {props.brand_name}
-        </div>
+        <ListItem className="brand-button" onClick={props.onClick} title={props.brand_name}>
+        <ListItemIcon>
+            <DashboardIcon />
+        </ListItemIcon>
+            <ListItemText primary={props.brand_name} />
+        </ListItem>
     )
 }
 
 function BrandDetail(props) {
+    const classes = useStyles();
+
     if (props.current_brand === undefined) {
         return (
             <div>
-                No brand selected!
             </div>
         );
     } else {
         return (
-            <div>
-                {props.current_brand.name}
+            <div className={classes.content}>
+                <Container
+                    maxWidth='lg'
+                    className={classes.container}
+                >
+                    <Grid container spacing={3}>
+                        <Grid item xs={6} md={8} lg={9}>
+                            <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                                {props.current_brand.name}
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={6} md={8} lg={9}>
+                            <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                                Another grid item
+                            </Paper>
+                        </Grid>
+                        
+                    </Grid>
+                </Container>
             </div>
         );
     }
+}
+
+function BrandList(props) {
+        const classes = useStyles();
+        return (
+            <Drawer
+                variant="permanent"
+                classes={{
+                    paper: clsx(classes.drawerPaper),
+                }}
+            >
+                <List>
+                    {props.brands_list.map( (brand, index) => {
+                        return (
+                            <BrandButton 
+                                brand_name={brand.name} 
+                                key={brand.id}
+                                onClick={() => props.handle_click(index)}
+                            />
+                        );
+                    })}
+                </List>
+                <Divider></Divider>
+            </Drawer>
+        )   
+}
+
+function Header(props){
+    const classes = useStyles();
+    return (
+        <div>
+        <Typography component="h1" variant="h6" color="inherit" noWrap className="header" gutterBottom>
+            My Brand list page!
+        </Typography>
+        </div>
+    );
 }
 
 class BrandsListPage extends Component {
@@ -54,19 +161,9 @@ class BrandsListPage extends Component {
     render() {
         const brands_list = this.state.brands;
         return (
-            <div>
-                <h1>My Brand list page!</h1>
-                <div className="brand-list">
-                    {brands_list.map( (brand, index) => {
-                        return (
-                            <BrandButton 
-                                brand_name={brand.name} 
-                                key={brand.id}
-                                onClick={() => this.handleBrandClick(index)}
-                            />
-                        );
-                    })}
-                </div>
+            <div className="root">
+                <Header></Header>
+                <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
                 <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
             </div>
         );
@@ -74,8 +171,9 @@ class BrandsListPage extends Component {
 
     handleBrandClick(index) {
         const new_current_brand = index;
+        const brands = this.state.brands;
         this.setState({
-            brands: this.state.brands,
+            brands: brands,
             current_brand: new_current_brand
         })
     }
@@ -88,7 +186,8 @@ const MainPage = (props) => {
     if (!data) return <div>Not Found!</div>;
 
     return (
-        <div className="main-page">
+        <div>
+            <CssBaseline/>
             <BrandsListPage data={data.brands}></BrandsListPage>
         </div>
     )
