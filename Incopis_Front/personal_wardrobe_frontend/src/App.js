@@ -14,6 +14,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Fab from '@material-ui/core/Fab';
 
 import { BRAND_LIST_QUERY, ITEMS_BY_BRAND_QUERY } from "./query";
 
@@ -76,7 +79,7 @@ function BrandButton(props) {
         root: {
             width: '100%',
             border: '2px solid',
-            margin: '-4px 3px',
+            margin: '2px 0px',
             position: "relative",
             fontFamily: [
                 '-apple-system',
@@ -97,7 +100,6 @@ function BrandButton(props) {
         },
     })(Button);
     return (
-        <ListItem>
             <StretchedButton 
                 variant="contained" 
                 color="secondary" 
@@ -106,7 +108,6 @@ function BrandButton(props) {
                 >
                     {props.brand_name}
             </StretchedButton>
-        </ListItem>
     );
 }
 
@@ -174,7 +175,9 @@ function BrandList(props) {
                     paper: clsx(classes.drawerPaper),
                 }}
             >
-                <List>
+                <ButtonGroup
+                    orientation="vertical"
+                >
                     {props.brands_list.map( (brand, index) => {
                         return (
                             <BrandButton 
@@ -184,7 +187,7 @@ function BrandList(props) {
                             />
                         );
                     })}
-                </List>
+                </ButtonGroup>
                 <Divider></Divider>
             </Drawer>
         )   
@@ -211,6 +214,14 @@ class BrandsListPage extends Component {
     }
     render() {
         const brands_list = this.state.brands;
+        const FabDownRight = withStyles({
+            root: {
+                position: 'absolute',
+                bottom: '12px',
+                right: '12px',
+            }
+        })(Fab);
+
         if (this.state.current_brand === undefined){
             return (
                 <div className="root">
@@ -224,6 +235,9 @@ class BrandsListPage extends Component {
                     <Header></Header>
                     <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
                     <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
+                    <FabDownRight color="secondary" aria-label="like">
+                        <FavoriteIcon />
+                    </FabDownRight>
                 </Box>
             );
         }
