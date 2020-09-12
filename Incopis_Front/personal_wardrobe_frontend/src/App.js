@@ -12,11 +12,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 import { BRAND_LIST_QUERY, ITEMS_BY_BRAND_QUERY } from "./query";
 
 import "./App.css";
-import { Drawer, Divider, Container, CssBaseline, Typography } from '@material-ui/core';
+import { Drawer, Divider, Container, CssBaseline, Typography, withStyles } from '@material-ui/core';
 
 const App = () => {
     return (
@@ -69,14 +71,43 @@ const useStyles = makeStyles((theme) => ({
 
 function BrandButton(props) {
     const classes = useStyles();
+
+    const StretchedButton = withStyles({
+        root: {
+            width: '100%',
+            border: '2px solid',
+            margin: '-4px 3px',
+            position: "relative",
+            fontFamily: [
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                'Roboto',
+                '"Helvetica Neue"',
+                'Arial',
+                'sans-serif',
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+              ].join(','),
+              "& .MuiButton-startIcon": {
+                position: "absolute",
+                left: 16
+              }
+        },
+    })(Button);
     return (
-        <ListItem className="brand-button" onClick={props.onClick} title={props.brand_name}>
-        <ListItemIcon>
-            <DashboardIcon />
-        </ListItemIcon>
-            <ListItemText primary={props.brand_name} />
+        <ListItem>
+            <StretchedButton 
+                variant="contained" 
+                color="secondary" 
+                onClick={props.onClick} 
+                startIcon={<DashboardIcon />}
+                >
+                    {props.brand_name}
+            </StretchedButton>
         </ListItem>
-    )
+    );
 }
 
 function BrandDetail(props) {
@@ -93,8 +124,14 @@ function BrandDetail(props) {
                 maxWidth='lg'
                 className={classes.container}
             >
-                <Grid container spacing={3}>
-                    <Grid item xs={6} md={8} lg={9}>
+                <Grid 
+                    container 
+                    spacing={3}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Grid item xs={6}>
                         <Paper className={clsx(classes.fixedHeight, classes.paper)}>
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             {props.current_brand.name}
@@ -102,7 +139,7 @@ function BrandDetail(props) {
                         <Divider/>
                         </Paper>
                     </Grid>
-                    <Grid item xs={6} md={8} lg={9}>
+                    <Grid item xs={6}>
                         <Paper className={clsx(classes.fixedHeight, classes.paper)}>
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             List of famous items:
@@ -113,7 +150,7 @@ function BrandDetail(props) {
                                 data.itemsByBrand.map( item => {
                                     return (
                                         <ListItem>
-                                        <ListItemText primary={item.description} />
+                                            <Button variant="contained">{item.description}</Button>
                                         </ListItem>
                                     );
                                 })
@@ -157,8 +194,8 @@ function Header(props){
     const classes = useStyles();
     return (
         <div>
-        <Typography component="h1" variant="h3" color="inherit" noWrap className="header" gutterBottom>
-            My Brand list page
+        <Typography component="h1" variant="h3" noWrap >
+            <Box className="header" color="text.secondary" bgcolor="info.main">My Brand list page</Box>
         </Typography>
         </div>
     );
@@ -183,11 +220,11 @@ class BrandsListPage extends Component {
             );
         } else {
             return (
-                <div className="root">
+                <Box>
                     <Header></Header>
                     <BrandList brands_list={brands_list} handle_click={index => this.handleBrandClick(index)}></BrandList>
                     <BrandDetail current_brand={brands_list[this.state.current_brand]}></BrandDetail>
-                </div>
+                </Box>
             );
         }
         
