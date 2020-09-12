@@ -96,7 +96,10 @@ function BrandDetail(props) {
                 <Grid container spacing={3}>
                     <Grid item xs={6} md={8} lg={9}>
                         <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                        <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             {props.current_brand.name}
+                        </Typography>
+                        <Divider/>
                         </Paper>
                     </Grid>
                     <Grid item xs={6} md={8} lg={9}>
