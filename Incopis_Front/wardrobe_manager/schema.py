@@ -17,7 +17,7 @@ class Query(graphene.ObjectType):
     all_brands = graphene.List(BrandType)
     all_items = graphene.List(ItemType)
     brand_by_name = graphene.Field(BrandType, name=graphene.String(required=True))
-    items_by_brand = graphene.List(ItemType, brand_id=graphene.ID(required=True))
+    items_by_brand = graphene.List(ItemType, brand_id=graphene.ID(required=True), max_price=graphene.Int(required=False))
 
     def resolve_all_brands(self, info):
         return Brand.objects.all()
@@ -31,8 +31,12 @@ class Query(graphene.ObjectType):
         except Brand.DoesNotExist:
             return None
 
-    def resolve_items_by_brand(self, info, brand_id):
-        return Item.objects.filter(brand=brand_id)
+    def resolve_items_by_brand(self, info, brand_id, max_price=None):
+        print (max_price)
+        if max_price is not None:
+            return Item.objects.filter(brand=brand_id, price__lte=max_price)
+        else:
+            return Item.objects.filter(brand=brand_id)
         
 
 class CreateBrand(graphene.Mutation):
