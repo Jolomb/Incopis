@@ -132,7 +132,7 @@ function BrandDetail(props) {
                     justify="center"
                     alignItems="center"
                 >
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6} lg={6}>
                         <Paper className={clsx(classes.fixedHeight, classes.paper)}>
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             {props.current_brand.name}
@@ -140,7 +140,7 @@ function BrandDetail(props) {
                         <Divider/>
                         </Paper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6} lg={6}>
                         <Paper className={clsx(classes.fixedHeight, classes.paper)}>
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             List of famous items:
