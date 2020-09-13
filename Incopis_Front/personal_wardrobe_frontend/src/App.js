@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
       },
       drawerPaper: {
-        position: 'relative',
         whiteSpace: 'nowrap',
+        marginTop: 95,
         width: 240,
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
+        [theme.breakpoints.up('sm')]: {
+            width: 240,
+            flexShrink: 0,
+          },
       },
       title: {
         flexGrow: 1,
@@ -147,8 +147,8 @@ function BrandDetail(props) {
                         <Typography gutterBottom>
                             Price Range:
                         </Typography>
-                        <Slider
-
+                        <Slider 
+                            aria-labelledby="input-slider"
                         />
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             List of items:
@@ -185,7 +185,7 @@ function BrandList(props) {
             <Drawer
                 variant="permanent"
                 classes={{
-                    paper: clsx(classes.drawerPaper),
+                    paper: clsx(classes.drawerPaper, classes.root),
                 }}
             >
                 <ButtonGroup
