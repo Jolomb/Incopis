@@ -150,9 +150,14 @@ function BrandDetail(props) {
                             {
                                 data.itemsByBrand.map( item => {
                                     return (
+                                        <Container>
                                         <ListItem>
-                                            <Button variant="contained">{item.description}</Button>
+                                            <Typography component='p' variant='p' color="inherit">
+                                                {item.description}: {item.price}$
+                                            </Typography>
                                         </ListItem>
+                                        <Divider/>
+                                        </Container>
                                     );
                                 })
                             }

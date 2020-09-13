@@ -32,7 +32,6 @@ class Query(graphene.ObjectType):
             return None
 
     def resolve_items_by_brand(self, info, brand_id, max_price=None):
-        print (max_price)
         if max_price is not None:
             return Item.objects.filter(brand=brand_id, price__lte=max_price)
         else:

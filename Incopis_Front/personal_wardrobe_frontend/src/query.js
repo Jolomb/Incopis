@@ -13,6 +13,7 @@ export const ITEMS_BY_BRAND_QUERY = gql`
     query items($brandId: ID!){
         itemsByBrand(brandId: $brandId) {
             description
+            price
         }
     }
 `;
