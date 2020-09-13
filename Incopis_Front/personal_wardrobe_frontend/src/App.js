@@ -4,6 +4,7 @@ import { Route, Switch, Line} from "react-router-dom";
 import { Query } from 'react-apollo';
 import { useQuery } from '@apollo/react-hooks';
 
+import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -17,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Fab from '@material-ui/core/Fab';
+import Card from '@material-ui/core/Card';
 
 import { BRAND_LIST_QUERY, ITEMS_BY_BRAND_QUERY } from "./query";
 
@@ -45,12 +47,12 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 240,
         width: `calc(100% - 240px)`,
       },
+      minHeight: {
+          minHeight: 240,
+      },
       container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
-      },
-      fixedHeight: {
-          height: 240,
       },
       paper: {
         padding: theme.spacing(2),
@@ -130,20 +132,26 @@ function BrandDetail(props) {
                     spacing={3}
                     direction="row"
                     justify="center"
-                    alignItems="center"
+                    alignItems="flex-start"
                 >
                     <Grid item xs={12} md={6} lg={6}>
-                        <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                        <Card className={clsx(classes.minHeight, classes.paper)}>
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
                             {props.current_brand.name}
                         </Typography>
                         <Divider/>
-                        </Paper>
+                        </Card>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
-                        <Paper className={clsx(classes.fixedHeight, classes.paper)}>
+                        <Card className={clsx(classes.minHeight, classes.paper)}>
+                        <Typography gutterBottom>
+                            Price Range:
+                        </Typography>
+                        <Slider
+
+                        />
                         <Typography component="h3" variant="h5" color="inherit" noWrap gutterBottom>
-                            List of famous items:
+                            List of items:
                         </Typography>
                         <Divider/>
                         <List>
@@ -152,7 +160,7 @@ function BrandDetail(props) {
                                     return (
                                         <Container>
                                         <ListItem>
-                                            <Typography component='p' variant='p' color="inherit">
+                                            <Typography paragraph>
                                                 {item.description}: {item.price}$
                                             </Typography>
                                         </ListItem>
@@ -162,7 +170,7 @@ function BrandDetail(props) {
                                 })
                             }
                         </List>    
-                        </Paper>
+                        </Card>
                     </Grid>
                     
                 </Grid>
