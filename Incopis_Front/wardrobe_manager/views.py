@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
+from django.conf import settings
 
 from .models import Brand
+import os
 
 def index(request):
     """
@@ -24,3 +26,7 @@ class AllBrandsView(generic.ListView):
 
 def brand_rate(request, brand_id):
     return HttpResponseRedirect(reverse('wardrobe_manager:all_brands'))
+
+class ReactPersonalWardrobeManagerView(View):
+    def get(self, request):
+        return render(request, "wardrobe_manager/index.html")

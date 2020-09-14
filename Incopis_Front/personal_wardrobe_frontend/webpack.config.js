@@ -9,11 +9,11 @@ const productionSettings = {
         entry: entrypoint,
         output: {
             // output directory will be the root directory of django
-            path: path.resolve(__dirname, '../'),
+            path: path.resolve(__dirname, "../", "wardrobe_manager", "static", "wardrobe_manager"),
             // this is the bundled code we wrote
-            filename: 'static/js/[name].js',
+            filename: 'js/[name].js',
             // this is the bundled library code
-              chunkFilename: 'static/js/[name].chunk.js'
+              chunkFilename: 'js/[name].chunk.js'
         },
         optimization: {
             minimize: true,
@@ -31,14 +31,17 @@ const productionSettings = {
             rules: [
                 {
                     // for bundling transpiled javascript
-                    test: /\\.m?js$/,
-                    exclude: /(node_modules|bower_components)/,
+                    test: /\.jsx?$/,
+                    exclude: /node_modules/,
+                    include: path.resolve(__dirname, 'src'),
                     use: {
                         loader: "babel-loader",
                     }
                 },
                 {
-                    test: /\\.css$/,
+                    test: /\.css$/,
+                    exclude: /node_modules/,
+                    include: path.resolve(__dirname, 'src'),
                     use: [
                       // IMPORTANT => don't forget `injectType`  option  
                       // in some cases some styles can be missing due to 
@@ -49,24 +52,7 @@ const productionSettings = {
                 },
             ]
         },
-        plugins: [
-            new HtmlWebPackPlugin({
-                // this is where webpack read our app for bundling
-                template: "./src/index.html",
-                // this is emitted bundle html file
-                // django will use this as template after bundling
-          filename:"./templates/index.html"
-            }),
-        ]
     };
-
-module.exports = {
-    watch: true,
-
-    watchOptions: {
-        poll: 1000
-    }
-};
 
 const devSettings = {
         mode: "development",
@@ -74,8 +60,8 @@ const devSettings = {
         output: {
             path: path.resolve(__dirname, './build'),
             publicPath: "/",
-            filename: 'static/js/bundle.js',
-            chunkFilename: 'static/js/[name].chunk.js',
+            filename: 'static/bundle.js',
+            chunkFilename: 'static/[name].chunk.js',
         },
         devtool: 'inline',
         devServer: {

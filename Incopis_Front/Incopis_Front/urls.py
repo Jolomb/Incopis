@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
+from wardrobe_manager.views import ReactPersonalWardrobeManagerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('wardrobe_manager/', include('wardrobe_manager.urls')),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path(r'', ReactPersonalWardrobeManagerView.as_view())
 ]

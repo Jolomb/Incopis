@@ -164,7 +164,7 @@ function BrandDetail(props) {
                                                 {item.description}: {item.price}$
                                             </Typography>
                                         </ListItem>
-                                        <Divider/>
+                                        <Divider variant="inset" component="li" />
                                         </Container>
                                     );
                                 })
