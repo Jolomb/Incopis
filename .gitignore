@@ -5,6 +5,6 @@ Incopis_Front/geckodriver.log
 *.coverage
 Incopis_Front/wardrobe_manager/geckodriver.log
 Incopis_Front/static_root/*
-Incopis_Front/personal_wardrobe_frontend/node_modules/*
+personal_wardrobe_frontend/node_modules/*
 Incopis_Front/wardrobe_manager/static/wardrobe_manager/js/main.js
 Incopis_Front/wardrobe_manager/static/wardrobe_manager/js/vendors~main.chunk.js

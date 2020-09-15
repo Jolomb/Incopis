@@ -9,7 +9,7 @@ const productionSettings = {
         entry: entrypoint,
         output: {
             // output directory will be the root directory of django
-            path: path.resolve(__dirname, "../", "wardrobe_manager", "static", "wardrobe_manager"),
+            path: path.resolve(__dirname, "../", "Incopis_Front", "wardrobe_manager", "static", "wardrobe_manager"),
             // this is the bundled code we wrote
             filename: 'js/[name].js',
             // this is the bundled library code
@@ -109,4 +109,4 @@ const devSettings = {
     };
     
 
-module.exports = devSettings;
+module.exports = productionSettings;
