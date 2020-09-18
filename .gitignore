@@ -8,3 +8,5 @@ Incopis_Front/static_root/*
 personal_wardrobe_frontend/node_modules/*
 Incopis_Front/wardrobe_manager/static/wardrobe_manager/js/main.js
 Incopis_Front/wardrobe_manager/static/wardrobe_manager/js/vendors~main.chunk.js
+cashier_go_client/bin/*
+cashier_go_client/pkg/*
