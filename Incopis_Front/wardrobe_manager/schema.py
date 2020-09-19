@@ -1,7 +1,9 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from .models import Brand, Item
+from graphql import GraphQLError
+
+from .models import Brand, Item, Shopper
 
 class BrandType(DjangoObjectType):
     class Meta:
@@ -18,6 +20,7 @@ class Query(graphene.ObjectType):
     all_items = graphene.List(ItemType)
     brand_by_name = graphene.Field(BrandType, name=graphene.String(required=True))
     items_by_brand = graphene.List(ItemType, brand_id=graphene.ID(required=True), max_price=graphene.Int(required=False))
+    items_by_user = graphene.List(ItemType)
 
     def resolve_all_brands(self, info):
         return Brand.objects.all()
@@ -30,6 +33,12 @@ class Query(graphene.ObjectType):
             return Brand.objects.get(name=name)
         except Brand.DoesNotExist:
             return None
+
+    def resolve_items_by_user(self, info):
+        if (not info.context.user.is_authenticated):
+            raise GraphQLError('You must be logged in to see your items!')
+
+        return Shopper.objects.get(user=info.context.user).items.all()
 
     def resolve_items_by_brand(self, info, brand_id, max_price=None):
         if (not info.context.user.is_authenticated):
