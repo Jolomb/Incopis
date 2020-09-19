@@ -9,9 +9,13 @@ cd ../
 cd ./Incopis_Front
 pipenv lock -r > ./requirements.txt
 pipenv shell
-
-
 python manage.py collectstatic
-cp ./uwsgi/incopis_nginx.conf /etc/nginx/sites-available/incopis_nginx.conf
-sudo /etc/init.d/nginx restart
-uwsgi --socket /tmp/incopis_front.sock --module Incopis_Front.wsgi --chmod-socket=666
+
+# Build the docker compose images
+docker-compose build
+
+# Set up the containers and the networks
+docker-compose up -d
+
+# Initialize the DB (In the future we will have data the persists between runs)
+docker-compose exec web python manage.py migrate --noinput
