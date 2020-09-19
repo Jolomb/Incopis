@@ -16,14 +16,14 @@ type ClientNoInitializedError struct {
 
 func (e *ClientNoInitializedError) Error() string {
 	return "Client not initialized yet!"
-}	
+}
 
 type Item struct {
-	Description graphql.String
-	ID graphql.ID
-	Price graphql.Float
+	Description  graphql.String
+	ID           graphql.ID
+	Price        graphql.Float
 	SerialNumber graphql.Int
-	Brand struct {
+	Brand        struct {
 		ID graphql.ID
 	}
 }
@@ -48,7 +48,7 @@ func (client *DebugClient) GetBrandByName(brand_name graphql.String) (*Brand, er
 		BrandByName Brand `graphql:"brandByName(name: $name)"`
 	}
 
-	variables := map[string]interface{} {
+	variables := map[string]interface{}{
 		"name": brand_name,
 	}
 
@@ -71,12 +71,12 @@ func (client *DebugClient) AddItemToBrand(new_item Item) (graphql.ID, error) {
 		CreateItem struct {
 			Id graphql.ID
 		} `graphql:"createItem(brandId: $b_id, description: $desc, price: $price, serialNumber: $serial)"`
-	} 
+	}
 
-	variables := map[string]interface{} {
-		"b_id": graphql.ID(new_item.Brand.ID),
-		"desc": new_item.Description,
-		"price": new_item.Price,
+	variables := map[string]interface{}{
+		"b_id":   graphql.ID(new_item.Brand.ID),
+		"desc":   new_item.Description,
+		"price":  new_item.Price,
 		"serial": new_item.SerialNumber,
 	}
 	err := client.client_backend.Mutate(context.Background(), &mutation, variables)
@@ -102,7 +102,7 @@ func (client *DebugClient) GetItemsByBrand(id graphql.ID) ([]Item, error) {
 		ItemsByBrand []Item `graphql:"itemsByBrand(brandId: $id)"`
 	}
 
-	variables := map[string]interface{} {
+	variables := map[string]interface{}{
 		"id": graphql.ID(id),
 	}
 
@@ -132,16 +132,16 @@ func (client *DebugClient) GetAllBrands() ([]Brand, error) {
 	}
 }
 
-// Exported Functions 
+// Exported Functions
 
 func AddItem(brand_id graphql.ID) {
 	var client DebugClient
 	client.InitClient()
 
-	var new_item Item = Item {
-		Description: "My Mutated from GO Item",
-		ID: graphql.ID(10000),
-		Price: 3030.12,
+	var new_item Item = Item{
+		Description:  "My Mutated from GO Item",
+		ID:           graphql.ID(10000),
+		Price:        3030.12,
 		SerialNumber: 13131313,
 	}
 	new_item.Brand.ID = brand_id
@@ -150,12 +150,12 @@ func AddItem(brand_id graphql.ID) {
 
 }
 
-func QueryBrand(name graphql.String) (*Brand) {
+func QueryBrand(name graphql.String) *Brand {
 	var client DebugClient
 	client.InitClient()
 
 	brand, _ := client.GetBrandByName(name)
-	return brand	
+	return brand
 }
 
 func Query() {
