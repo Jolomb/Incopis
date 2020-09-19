@@ -54,7 +54,30 @@ class CreateBrand(graphene.Mutation):
             name=brand.name,
         )
 
+class CreateItem(graphene.Mutation):
+    id = graphene.Int()
+
+    class Arguments:
+        brand_id = graphene.ID(required=True)
+        description = graphene.String(required=True)
+        price = graphene.Float(required=True)
+        serial_number = graphene.Int(required=True)
+
+    def mutate(self, info, brand_id, description, price, serial_number):
+        try:
+            brand = Brand.objects.get(pk=brand_id)
+        except Brand.DoesNotExist:
+            return None
+
+        item = Item(description=description, price=price, serial_number=serial_number, brand=brand)
+        item.save()
+        return CreateItem(
+            id=item.id
+        )
+
+
 class Mutation(graphene.ObjectType):
     create_brand = CreateBrand.Field()
+    create_item = CreateItem.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
