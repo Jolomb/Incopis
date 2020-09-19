@@ -21,7 +21,7 @@ func (e *ClientNoInitializedError) Error() string {
 type Item struct {
 	Description graphql.String
 	ID graphql.ID
-	price graphql.Int
+	Price graphql.Float
 }
 
 type IncopisClient interface {
@@ -39,11 +39,26 @@ func (client *DebugClient) InitClient() error {
 	return nil
 }
 
-func (client *DebugClient) GetItemsByBrand(brandId graphql.ID) ([]Item, error) {
+func (client *DebugClient) GetItemsByBrand(id graphql.ID) ([]Item, error) {
 	if client.client_backend == nil {
 		return nil, &ClientNoInitializedError{}
 	}
-	return nil, nil
+
+	var query struct {
+		ItemsByBrand []Item `graphql:"itemsByBrand(brandId: $id)"`
+	}
+
+	variables := map[string]interface{} {
+		"id": graphql.ID(id),
+	}
+
+	err := client.client_backend.Query(context.Background(), &query, variables)
+	if err != nil {
+		fmt.Println("Failed to fetch query: ", err)
+		return nil, err
+	} else {
+		return query.ItemsByBrand, nil
+	}
 }
 
 func (client *DebugClient) GetAllBrands() ([]Brand, error) {
@@ -73,5 +88,10 @@ func Query() {
 
 	for _, brand := range brands {
 		fmt.Println("Brand name: ", brand.Name)
+		items, _ := client.GetItemsByBrand(brand.ID)
+
+		for _, item := range items {
+			fmt.Println("Item: ", item.Description)
+		}
 	}
 }
