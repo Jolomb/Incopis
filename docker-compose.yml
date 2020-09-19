@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./Incopis_Front
+    command: uwsgi --socket :8000 --module Incopis_Front.wsgi
+    expose: 
+      - 8000
+
+    environment:
+      - SQL_USER=incopis
+      - SQL_PASSWORD=incopis_password
+      - SQL_HOST=db
+    depends_on:
+      - db
+  db:
+    image: postgres:12.0-alpine
+    environment:
+      - POSTGRES_USER=incopis
+      - POSTGRES_PASSWORD=incopis_password
+      - POSTGRES_DB=incopis_data
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web

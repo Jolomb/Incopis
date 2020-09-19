@@ -91,8 +91,10 @@ WSGI_APPLICATION = 'Incopis_Front.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : '', # This will use the unix socket connection
+        'HOST' : os.environ.get("SQL_HOST", ''), # This will use the unix socket connection by defualt, unless changed
         'NAME': 'incopis_data',
+        "USER": os.environ.get('SQL_USER', ''), # By defulat we connect via UNIX socket which needs no user.
+        "PASSWORD": os.environ.get('SQL_PASSWORD', '') # By default we connect via UNIX socket which needs no password
     }
 }
 

@@ -6,6 +6,8 @@ cd ./personal_wardrobe_frontend
 npm run build
 
 cd ../
+cd ./Incopis_Front
+pipenv lock -r > ./requirements.txt
 pipenv shell
 
 
