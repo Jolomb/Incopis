@@ -13,5 +13,8 @@ func main() {
 	fmt.Println("Resolved ", name, " TO: ", addr.String())
 
 	utils.Query()
+	brand := utils.QueryBrand("MyBrand")
+
+	utils.AddItem(brand.ID)
 
 }
