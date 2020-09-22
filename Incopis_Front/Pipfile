@@ -17,6 +17,9 @@ graphene = "*"
 django-cors-headers = "*"
 django-extensions = "*"
 django-redis = "*"
+ipdb = "*"
+djangorestframework = "*"
+djangorestframework-jwt = "*"
 
 [requires]
 python_version = "3.6"
