@@ -13,8 +13,11 @@ func main() {
 	fmt.Println("Resolved ", name, " TO: ", addr.String())
 
 	utils.Query()
-	brand := utils.QueryBrand("MyBrand")
-
-	utils.AddItem(brand.ID)
+	brand, err := utils.QueryBrand("MyBrand2")
+	if err != nil {
+	} else{
+		fmt.Println("Query brand success!: ", brand)
+		utils.AddItem(brand.ID)	
+	}
 
 }

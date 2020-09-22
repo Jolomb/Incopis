@@ -32,7 +32,7 @@ class Query(graphene.ObjectType):
         try:
             return Brand.objects.get(name=name)
         except Brand.DoesNotExist:
-            return None
+            raise GraphQLError("Brand: {brand} doesn't exist".format(brand=name))
 
     def resolve_items_by_user(self, info):
         if (not info.context.user.is_authenticated):

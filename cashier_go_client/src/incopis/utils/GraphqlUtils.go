@@ -150,12 +150,12 @@ func AddItem(brand_id graphql.ID) {
 
 }
 
-func QueryBrand(name graphql.String) *Brand {
+func QueryBrand(name graphql.String) (*Brand, error) {
 	var client DebugClient
 	client.InitClient()
 
-	brand, _ := client.GetBrandByName(name)
-	return brand
+	brand, err := client.GetBrandByName(name)
+	return brand, err
 }
 
 func Query() {
