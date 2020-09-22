@@ -27,8 +27,8 @@ services:
       - POSTGRES_DB=incopis_data
     volumes:
       - type: bind 
-        source: ./persistent_test_data/data/
-        target: /var/lib/postgresql/data/
+        source: ./IncopisTestData/data/
+        target: /var/lib/postgresql/data/ 
   
   nginx:
     build: ./nginx
