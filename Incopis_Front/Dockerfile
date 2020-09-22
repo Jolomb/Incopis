@@ -15,6 +15,9 @@ RUN pip install wheel
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY ./Incopis_Front /code/Incopis_Front
+COPY ./templates /code/templates
+COPY ./wardrobe_manager /code/wardrobe_manager
+COPY ./manage.py /code/
 
 EXPOSE 8000

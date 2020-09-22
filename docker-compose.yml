@@ -8,7 +8,10 @@ services:
       - 8000
 
     volumes:
-      - static_volume:/code/static_root
+      - type: bind 
+        source: ./Incopis_Front/static_root/ 
+        target: /code/static_root
+        read_only: true     
 
     environment:
       - SQL_USER=incopis
@@ -22,13 +25,20 @@ services:
       - POSTGRES_USER=incopis
       - POSTGRES_PASSWORD=incopis_password
       - POSTGRES_DB=incopis_data
+    volumes:
+      - type: bind 
+        source: ./persistent_test_data/data/
+        target: /var/lib/postgresql/data/
+  
   nginx:
     build: ./nginx
     ports:
       - 8000:80
     volumes:
-      - static_volume:/code/static_root
+      - type: bind 
+        source: ./Incopis_Front/static_root/ 
+        target: /code/static_root
+        read_only: true     
+
     depends_on:
       - web
-volumes:
-  static_volume:
