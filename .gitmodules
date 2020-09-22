@@ -1,0 +1,4 @@
+[submodule "IncopisTestData"]
+	path = IncopisTestData
+	url = https://github.com/Jolomb/IncopisTestData
+	branch = master
