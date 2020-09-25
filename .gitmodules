@@ -2,3 +2,6 @@
 	path = IncopisTestData
 	url = https://github.com/Jolomb/IncopisTestData
 	branch = master
+[submodule "IncopisFrontEnd"]
+	path = IncopisFrontEnd
+	url = git@github.com:Jolomb/IncopisFrontEnd.git
