@@ -2,7 +2,7 @@
 
 # Build the frontend
 echo "Build frontend using NPM"
-cd ./personal_wardrobe_frontend
+cd ./IncopisFrontEnd
 npm run build
 
 cd ../
