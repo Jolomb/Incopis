@@ -4,4 +4,4 @@
 	branch = master
 [submodule "IncopisFrontEnd"]
 	path = IncopisFrontEnd
-	url = git@github.com:Jolomb/IncopisFrontEnd.git
+	url = https://github.com/Jolomb/IncopisFrontEnd.git 
